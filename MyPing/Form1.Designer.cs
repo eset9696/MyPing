@@ -32,8 +32,7 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.btnAddIp = new System.Windows.Forms.Button();
 			this.btnDeleteIp = new System.Windows.Forms.Button();
-			this.dataGridView1 = new System.Windows.Forms.DataGridView();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+			this.lvIpAddresses = new System.Windows.Forms.ListView();
 			this.SuspendLayout();
 			// 
 			// rtbIpAddress
@@ -62,6 +61,7 @@
 			this.btnAddIp.TabIndex = 2;
 			this.btnAddIp.Text = "Add";
 			this.btnAddIp.UseVisualStyleBackColor = true;
+			this.btnAddIp.Click += new System.EventHandler(this.btnAddIp_Click);
 			// 
 			// btnDeleteIp
 			// 
@@ -71,31 +71,33 @@
 			this.btnDeleteIp.TabIndex = 3;
 			this.btnDeleteIp.Text = "Detele";
 			this.btnDeleteIp.UseVisualStyleBackColor = true;
+			this.btnDeleteIp.Click += new System.EventHandler(this.btnDeleteIp_Click);
 			// 
-			// dataGridView1
+			// lvIpAddresses
 			// 
-			this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.lvIpAddresses.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView1.Location = new System.Drawing.Point(12, 46);
-			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.Size = new System.Drawing.Size(424, 320);
-			this.dataGridView1.TabIndex = 4;
+			this.lvIpAddresses.HideSelection = false;
+			this.lvIpAddresses.Location = new System.Drawing.Point(12, 46);
+			this.lvIpAddresses.Name = "lvIpAddresses";
+			this.lvIpAddresses.Size = new System.Drawing.Size(424, 320);
+			this.lvIpAddresses.TabIndex = 4;
+			this.lvIpAddresses.UseCompatibleStateImageBehavior = false;
+			this.lvIpAddresses.View = System.Windows.Forms.View.Details;
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(448, 378);
-			this.Controls.Add(this.dataGridView1);
+			this.Controls.Add(this.lvIpAddresses);
 			this.Controls.Add(this.btnDeleteIp);
 			this.Controls.Add(this.btnAddIp);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.rtbIpAddress);
 			this.Name = "Form1";
 			this.Text = "Form1";
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -107,7 +109,7 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button btnAddIp;
 		private System.Windows.Forms.Button btnDeleteIp;
-		private System.Windows.Forms.DataGridView dataGridView1;
+		private System.Windows.Forms.ListView lvIpAddresses;
 	}
 }
 
