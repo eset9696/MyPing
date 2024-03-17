@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace MyPing
 {
@@ -39,32 +41,24 @@ namespace MyPing
 			lvIpAddresses.Columns.Add("Sent");
 			lvIpAddresses.Columns.Add("Received");
 			lvIpAddresses.Columns.Add("Lost");
+
+			
 		}
 
-		void Send()
+		void InitItems()
 		{
-            for (int i = 0; i < Nodes.Count; i++)
-            {
-                Ping pingSender = new Ping();
-                PingOptions options = new PingOptions();
-                PingReply reply = pingSender.Send(Nodes[i].IpAddress, timeout, data, options);
-                if (reply.Status == IPStatus.Success)
-                {
-                    lvIpAddresses.Items[i].SubItems.Add(reply.Buffer.Length.ToString());
-                    lvIpAddresses.Items[i].SubItems.Add(reply.RoundtripTime.ToString());
-                    lvIpAddresses.Items[i].SubItems.Add(reply.Options.Ttl.ToString());
-					lvIpAddresses.Items[i].SubItems.Add(Nodes[i].Sent.ToString());
-					lvIpAddresses.Items[i].SubItems.Add(Nodes[i].Received.ToString());
-					lvIpAddresses.Items[i].SubItems.Add(Nodes[i].Lost.ToString());
-                }
-                if (reply.Status == IPStatus.TimedOut)
-                {
-					lvIpAddresses.Items[i].SubItems[.Add((Nodes[i].Lost + 1).ToString());
-                }
-            }
-        }
+			for (int i = 0; i < Nodes.Count; i++)
+			{
+				lvIpAddresses.Items[i].SubItems.Add(data.Length.ToString());
+				lvIpAddresses.Items[i].SubItems.Add("0");
+				lvIpAddresses.Items[i].SubItems.Add("0");
+				lvIpAddresses.Items[i].SubItems.Add("0");
+				lvIpAddresses.Items[i].SubItems.Add("0");
+				lvIpAddresses.Items[i].SubItems.Add("0");
+			}
+		}
 
-		void RefreshData()
+		void SendData()
 		{
 			while (lvIpAddresses.Items.Count > 0)
 			{
@@ -94,23 +88,47 @@ namespace MyPing
 			}
 		}
 
-		void UpdateData()
+		void Update()
 		{
-			updateThread = new Thread(RefreshData);
+			updateThread = new Thread(SendData);
 			updateThread.Start();
+		}
+
+		bool ValidateIp()
+		{
+			if (Regex.IsMatch(rtbIpAddress.Text, @"^[\d{1, 3}]\.[\d{1, 3}]\.[\d{1, 3}]\.[\d{1, 3}]")) return true;
+			return false;
 		}
 
 		private void btnAddIp_Click(object sender, EventArgs e)
 		{
-			Nodes.Add(new Node(rtbIpAddress.Text));
-			lvIpAddresses.Items.Add(rtbIpAddress.Text);
-			Send();
-			UpdateData();
+			if (ValidateIp())
+			{
+				Nodes.Add(new Node(rtbIpAddress.Text));
+				lvIpAddresses.Items.Add(rtbIpAddress.Text);
+				InitItems();
+				if (lvIpAddresses.Items.Count == 1) Update(); 
+				rtbIpAddress.Clear();
+			}
 		}
 
 		private void btnDeleteIp_Click(object sender, EventArgs e)
 		{
-			//dgvIpAddresses.Rows.Remove(dgvIpAddresses.SelectedRows[0]);
+			DeleteNodeByIp(lvIpAddresses.SelectedItems[0].SubItems[0].Text);
+			lvIpAddresses.SelectedItems[0].Remove();
+			if (lvIpAddresses.Items.Count == 0) updateThread.Join();
+		}
+
+		void DeleteNodeByIp(string ip)
+		{
+			for(int i = 0; i < Nodes.Count; i++)
+			{
+				if (Nodes[i].IpAddress.Equals(ip))
+				{
+					Nodes.Remove(Nodes[i]);
+					break;
+				}
+			}
 		}
 	}
 }

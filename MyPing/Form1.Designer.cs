@@ -37,6 +37,7 @@
 			// 
 			// rtbIpAddress
 			// 
+			this.rtbIpAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.rtbIpAddress.Location = new System.Drawing.Point(46, 12);
 			this.rtbIpAddress.Name = "rtbIpAddress";
 			this.rtbIpAddress.Size = new System.Drawing.Size(221, 28);
@@ -78,8 +79,10 @@
 			this.lvIpAddresses.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.lvIpAddresses.FullRowSelect = true;
 			this.lvIpAddresses.HideSelection = false;
 			this.lvIpAddresses.Location = new System.Drawing.Point(12, 46);
+			this.lvIpAddresses.MultiSelect = false;
 			this.lvIpAddresses.Name = "lvIpAddresses";
 			this.lvIpAddresses.Size = new System.Drawing.Size(424, 320);
 			this.lvIpAddresses.TabIndex = 4;
